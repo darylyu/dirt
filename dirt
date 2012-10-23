@@ -11,16 +11,27 @@ Options:
   -h --help     Show this screen.
 """
 from docopt import docopt
+from os import path, walk
 
 
 def resize(proportion, paths):
     print "In resize()."
     print "proportion = %d, paths = %s" % (proportion, paths)
+    for filepath in paths:
+        if path.isdir(filepath):
+            __resize_dir(proportion, filepath)
+        else:
+            __resize_image(proportion, filepath)
 
 
 def __resize_dir(proportion, filepath):
     print "In __resize_dir()."
     print "proportion = %d, path = %s" % (proportion, filepath)
+
+    # Let's not do recursion for now...
+    root, dirs, files = walk(filepath).next()
+    for img in files:
+        __resize_image(proportion, img)
 
 
 def __resize_image(proportion, filepath):
