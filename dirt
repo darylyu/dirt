@@ -10,7 +10,6 @@ Usage:
 Options:
   -h --help     Show this screen.
 """
-
 from docopt import docopt
 
 
@@ -18,7 +17,10 @@ def resize(proportion, paths):
     pass
 
 
-def __resize_image(path):
+def __resize_dir(proportion, path):
+    pass
+
+def __resize_image(proportion, path):
     pass
 
 
