@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+"""dirt - dirt image resizing tool.
+
+Usage:
+  dirt resize <proportion> <path>...
+  dirt -h | --help
+  dirt --version
+
+Options:
+  -h --help     Show this screen.
+"""
+
+from docopt import docopt
+
+
+def resize(proportion, paths):
+    pass
+
+
+def __resize_image(path):
+    pass
+
+
+if __name__ == "__main__":
+    args = docopt(__doc__, version='dirt 0.0.0')
+
+    if args['resize']:
+        resize(args['<proportion>'], args['<path>'])
