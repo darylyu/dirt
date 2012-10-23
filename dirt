@@ -14,18 +14,23 @@ from docopt import docopt
 
 
 def resize(proportion, paths):
-    pass
+    print "In resize()."
+    print "proportion = %d, paths = %s" % (proportion, paths)
 
 
-def __resize_dir(proportion, path):
-    pass
+def __resize_dir(proportion, filepath):
+    print "In __resize_dir()."
+    print "proportion = %d, path = %s" % (proportion, filepath)
 
-def __resize_image(proportion, path):
-    pass
+
+def __resize_image(proportion, filepath):
+    print "In __resize_image()."
+    print "proportion = %d, path = %s" % (proportion, filepath)
 
 
 if __name__ == "__main__":
     args = docopt(__doc__, version='dirt 0.0.0')
+    print "args = ", args
 
     if args['resize']:
         resize(int(args['<proportion>']), args['<path>'])
