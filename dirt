@@ -11,25 +11,28 @@ Options:
   -h --help     Show this screen.
 """
 from docopt import docopt
-from os import path, walk
 
+import Image
+import os
 
 def resize(proportion, paths):
     print "In resize()."
     print "proportion = %d, paths = %s" % (proportion, paths)
     for filepath in paths:
-        if path.isdir(filepath):
-            __resize_dir(proportion, filepath)
-        else:
-            __resize_image(proportion, filepath)
-
+        try:
+            if os.path.isdir(filepath):
+                __resize_dir(proportion, filepath)
+            else:
+                __resize_image(proportion, filepath)
+        except IOError as e:
+            print "%s: %s" % (e, filepath)
 
 def __resize_dir(proportion, filepath):
     print "In __resize_dir()."
     print "proportion = %d, path = %s" % (proportion, filepath)
 
     # Let's not do recursion for now...
-    root, dirs, files = walk(filepath).next()
+    root, dirs, files = os.walk(filepath).next()
     for img in files:
         __resize_image(proportion, img)
 
@@ -37,6 +40,16 @@ def __resize_dir(proportion, filepath):
 def __resize_image(proportion, filepath):
     print "In __resize_image()."
     print "proportion = %d, path = %s" % (proportion, filepath)
+
+    image = Image.open(filepath)
+    width, height = image.size
+    width = int((float(proportion) / 100.0) * width)
+    height = int((float(proportion) / 100.0) * height)
+    size = width, height
+    image = image.resize(size, Image.ANTIALIAS)
+    if (not os.access("resized_imgs", os.F_OK)):
+        os.mkdir("resized_imgs")
+    image.save("resized_imgs/" + os.path.basename(filepath))
 
 
 if __name__ == "__main__":
