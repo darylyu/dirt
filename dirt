@@ -15,7 +15,13 @@ from docopt import docopt
 import Image
 import os
 
+
 def resize(proportion, paths):
+    """
+    Top-level interface for resizing images.
+    Accepts a list of paths that may include image files
+    or directories.
+    """
     print "In resize()."
     print "proportion = %d, paths = %s" % (proportion, paths)
     for filepath in paths:
@@ -27,7 +33,12 @@ def resize(proportion, paths):
         except IOError as e:
             print "%s: %s" % (e, filepath)
 
+
 def __resize_dir(proportion, filepath):
+    """
+    Internal function that crawls through a directory looking
+    for images to resize.
+    """
     print "In __resize_dir()."
     print "proportion = %d, path = %s" % (proportion, filepath)
 
@@ -38,6 +49,9 @@ def __resize_dir(proportion, filepath):
 
 
 def __resize_image(proportion, filepath):
+    """
+    Internal function that does the actual resizing of the image.
+    """
     print "In __resize_image()."
     print "proportion = %d, path = %s" % (proportion, filepath)
 
