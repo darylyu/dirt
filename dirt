@@ -45,10 +45,10 @@ def __resize_dir(proportion, filepath):
     # Let's not do recursion for now...
     root, dirs, files = os.walk(filepath).next()
     for img in files:
-        __resize_image(proportion, img)
+        __resize_image(proportion, img, root)
 
 
-def __resize_image(proportion, filepath):
+def __resize_image(proportion, filepath, parent=""):
     """
     Internal function that does the actual resizing of the image.
     """
@@ -61,9 +61,13 @@ def __resize_image(proportion, filepath):
     height = int((float(proportion) / 100.0) * height)
     size = width, height
     image = image.resize(size, Image.ANTIALIAS)
-    if (not os.access("resized_imgs", os.F_OK)):
-        os.mkdir("resized_imgs")
-    image.save("resized_imgs/" + os.path.basename(filepath))
+    output_dir = "resized_imgs"
+    if (not os.access(output_dir, os.F_OK)):
+        os.mkdir(output_dir)
+    if parent:
+        os.mkdir(output_dir + "/" + parent)
+        filepath = parent + "/" + filepath
+    image.save(output_dir + "/" + filepath)
 
 
 if __name__ == "__main__":
